@@ -1,19 +1,23 @@
 package org.example.bank;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/shop";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private JdbcTemplate jdbcTemplate;
 
-    public static Connection connect() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+
+    @Autowired
+    public DatabaseConnection(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Payment searchCard(Payment payment) throws SQLException {
-
+    public boolean searchCard(Payment payment) {
+        String query = "SELECT COUNT(*) FROM karty WHERE NumerKarty = ? AND TerminWaznosci = ? AND CVV = ?";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, payment.getCardNumber(), payment.getExpirationDate(), payment.getCvv());
+        return count > 0;
     }
 }

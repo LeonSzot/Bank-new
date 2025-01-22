@@ -3,24 +3,25 @@ package org.example.bank;
 import java.sql.Date;
 
 public class Payment {
-    private long cardPayment;
-    private Date expirationDate;
+    private long cardNumber;
+    private String expirationDate;
     private int cvv;
     private double amount;
 
-    public long getCardPayment() {
-        return cardPayment;
+
+    public long getCardNumber() {
+        return cardNumber;
     }
 
-    public void setCardPayment(long cardPayment) {
-        this.cardPayment = cardPayment;
+    public void setCardNumber(long cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -40,8 +41,8 @@ public class Payment {
         this.amount = amount;
     }
 
-    public Payment(long cardPayment, Date expirationDate, int cvv, double amount) {
-        this.cardPayment = cardPayment;
+    public Payment(long cardNumber, String expirationDate, int cvv, double amount) {
+        this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
         this.amount = amount;

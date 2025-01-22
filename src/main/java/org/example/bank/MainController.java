@@ -8,14 +8,20 @@ import java.sql.SQLException;
 
 @RestController
 public class MainController {
+    DatabaseConnection db;
+
+    public MainController(DatabaseConnection db) {
+        this.db = db;
+    }
+
     @PostMapping("/api/payments")
-    public int payment(@RequestBody Payment payment) throws SQLException {
-        DatabaseConnection db = new DatabaseConnection();
-        db.connect();
+    public boolean payment(@RequestBody Payment payment){
 
-        //TODO
-        //logika endpointa
 
-        return 1;
+        if(db.searchCard(payment)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
