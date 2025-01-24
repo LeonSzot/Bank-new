@@ -8,7 +8,6 @@ public class Payment {
     private int cvv;
     private double amount;
 
-
     public long getCardNumber() {
         return cardNumber;
     }
