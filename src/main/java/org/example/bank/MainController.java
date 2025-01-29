@@ -16,28 +16,27 @@ public class MainController {
     }
 
     @PostMapping("/api/payments")
-    public int payment(@RequestBody Payment payment){
-        if(db.searchCard(payment)){
+    public ResponseEntity<Boolean> payment(@RequestBody Payment payment) {
+        if (db.searchCard(payment)) {
             LocalDate date = LocalDate.parse(payment.getExpirationDate());
             LocalDate currentDate = LocalDate.now();
-            if (currentDate.isBefore(date)){
-                if (payment.getAmount() <= db.getMoney(payment) && payment.getAmount() <= db.getLimit(payment)){
+
+            if (currentDate.isBefore(date)) {
+                if (payment.getAmount() <= db.getMoney(payment) && payment.getAmount() <= db.getLimit(payment)) {
                     db.updateMoney(payment);
                     System.out.println("[Bank] Dokonano płatności.");
-                    return 200;
-                }
-                else {
+                    return ResponseEntity.ok(true);
+                } else {
                     System.out.println("[Bank] Nie masz pieniędzy lub przekroczyłeś limit.");
                 }
-            }
-            else {
+            } else {
                 System.out.println("[Bank] Upłynął termin ważności karty.");
             }
-        }
-        else{
+        } else {
             System.out.println("[Bank] Nie znaleziono karty.");
         }
 
-        return 400;
+        return ResponseEntity.badRequest().body(false);
     }
+
 }
