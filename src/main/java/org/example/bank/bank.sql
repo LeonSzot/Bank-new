@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sty 15, 2025 at 02:51 PM
+-- Generation Time: Mar 26, 2025 at 09:16 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -20,8 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `bank`
 --
-CREATE DATABASE IF NOT EXISTS `bank` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `bank`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `blik`
+--
+
+CREATE TABLE `blik` (
+  `ID` int(11) NOT NULL,
+  `KontoID` bigint(20) NOT NULL,
+  `NumerBlik` int(11) NOT NULL,
+  `Aktywny` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -29,18 +40,14 @@ USE `bank`;
 -- Struktura tabeli dla tabeli `karty`
 --
 
-DROP TABLE IF EXISTS `karty`;
-CREATE TABLE IF NOT EXISTS `karty` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `karty` (
+  `ID` int(11) NOT NULL,
   `KontoID` int(11) DEFAULT NULL,
   `NumerKarty` varchar(16) DEFAULT NULL,
   `TerminWaznosci` date DEFAULT NULL,
   `CVV` char(3) DEFAULT NULL,
-  `Limit` decimal(15,2) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `NumerKarty` (`NumerKarty`),
-  KEY `KontoID` (`KontoID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Limit` decimal(15,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `karty`
@@ -57,17 +64,15 @@ INSERT INTO `karty` (`ID`, `KontoID`, `NumerKarty`, `TerminWaznosci`, `CVV`, `Li
 -- Struktura tabeli dla tabeli `klienci`
 --
 
-DROP TABLE IF EXISTS `klienci`;
-CREATE TABLE IF NOT EXISTS `klienci` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `klienci` (
+  `ID` int(11) NOT NULL,
   `Imie` varchar(50) DEFAULT NULL,
   `Nazwisko` varchar(50) DEFAULT NULL,
   `Adres` varchar(100) DEFAULT NULL,
   `Telefon` varchar(15) DEFAULT NULL,
   `Email` varchar(50) DEFAULT NULL,
-  `DataUrodzenia` date DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `DataUrodzenia` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `klienci`
@@ -83,17 +88,13 @@ INSERT INTO `klienci` (`ID`, `Imie`, `Nazwisko`, `Adres`, `Telefon`, `Email`, `D
 -- Struktura tabeli dla tabeli `konta`
 --
 
-DROP TABLE IF EXISTS `konta`;
-CREATE TABLE IF NOT EXISTS `konta` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `konta` (
+  `ID` int(11) NOT NULL,
   `KlientID` int(11) DEFAULT NULL,
   `NumerKonta` varchar(20) DEFAULT NULL,
   `TypKonta` enum('Oszczędnościowe','Rachunek bieżący','Inwestycyjne') DEFAULT NULL,
-  `Saldo` decimal(15,2) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `NumerKonta` (`NumerKonta`),
-  KEY `KlientID` (`KlientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Saldo` decimal(15,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `konta`
@@ -110,16 +111,13 @@ INSERT INTO `konta` (`ID`, `KlientID`, `NumerKonta`, `TypKonta`, `Saldo`) VALUES
 -- Struktura tabeli dla tabeli `transakcje`
 --
 
-DROP TABLE IF EXISTS `transakcje`;
-CREATE TABLE IF NOT EXISTS `transakcje` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `transakcje` (
+  `ID` int(11) NOT NULL,
   `KartaID` int(11) DEFAULT NULL,
   `Data` date DEFAULT NULL,
   `Kwota` decimal(15,2) DEFAULT NULL,
-  `TypTransakcji` enum('Zakup','Wpłata','Wypłata') DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `KartaID` (`KartaID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `TypTransakcji` enum('Zakup','Wpłata','Wypłata') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `transakcje`
@@ -130,6 +128,79 @@ INSERT INTO `transakcje` (`ID`, `KartaID`, `Data`, `Kwota`, `TypTransakcji`) VAL
 (2, 1, '2025-01-02', 500.00, 'Wpłata'),
 (3, 2, '2025-01-03', 700.00, 'Zakup'),
 (4, 3, '2025-01-04', 1000.00, 'Wypłata');
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `blik`
+--
+ALTER TABLE `blik`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indeksy dla tabeli `karty`
+--
+ALTER TABLE `karty`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `NumerKarty` (`NumerKarty`),
+  ADD KEY `KontoID` (`KontoID`);
+
+--
+-- Indeksy dla tabeli `klienci`
+--
+ALTER TABLE `klienci`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indeksy dla tabeli `konta`
+--
+ALTER TABLE `konta`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `NumerKonta` (`NumerKonta`),
+  ADD KEY `KlientID` (`KlientID`);
+
+--
+-- Indeksy dla tabeli `transakcje`
+--
+ALTER TABLE `transakcje`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `KartaID` (`KartaID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `blik`
+--
+ALTER TABLE `blik`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `karty`
+--
+ALTER TABLE `karty`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `klienci`
+--
+ALTER TABLE `klienci`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `konta`
+--
+ALTER TABLE `konta`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `transakcje`
+--
+ALTER TABLE `transakcje`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

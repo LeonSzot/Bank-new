@@ -1,11 +1,10 @@
 package org.example.bank;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 @RestController
 public class MainController {
@@ -39,4 +38,14 @@ public class MainController {
         return ResponseEntity.badRequest().body(false);
     }
 
+    @GetMapping("/api/newblik/{kontoID}")
+    public int newblik(@PathVariable int kontoID) {
+        Random rand = new Random();
+        int blikNumber = 0;
+        for (int i = 0; i < 6; i++) {
+            blikNumber += (int) (rand.nextInt(10) * Math.pow(10, i));
+        }
+        db.createNewBlik(kontoID, blikNumber);
+        return blikNumber;
+    }
 }
