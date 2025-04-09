@@ -14,7 +14,7 @@ public class MainController {
         this.db = db;
     }
 
-    @PostMapping("/api/payments")
+    @PostMapping("/api/payments/card")
     public ResponseEntity<Boolean> payment(@RequestBody Payment payment) {
         if (db.searchCard(payment)) {
             LocalDate date = LocalDate.parse(payment.getExpirationDate());
@@ -47,5 +47,18 @@ public class MainController {
         }
         db.createNewBlik(kontoID, blikNumber);
         return blikNumber;
+    }
+
+    @PostMapping("api/payments/blik")
+    public  ResponseEntity<Boolean> payment(@RequestBody Blik blik){
+        if(db.searchBlik(blik)){
+            db.updateMoneyBlik(blik);
+            System.out.println("[Bank] Dokonano płatności.");
+            return ResponseEntity.ok(true);
+        } else {
+            System.out.println("[Bank] Nie znaleziono kodu Blik.");
+        }
+
+        return ResponseEntity.badRequest().body(false);
     }
 }

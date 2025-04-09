@@ -1,6 +1,5 @@
 package org.example.bank;
 
-import java.sql.Date;
 
 public class Payment {
     private long cardNumber;

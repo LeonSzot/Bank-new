@@ -25,6 +25,12 @@ public class DatabaseConnection {
         return count == 1;
     }
 
+    public boolean searchBlik(Blik blik){
+        String query = "SELECT COUNT(*) FROM blik WHERE NumerBlik = ? AND Aktywny = ?";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, blik.getBlikCode(), true);
+        return count == 1;
+    }
+
     public void updateMoney(Payment payment) {
         String query = "UPDATE konta JOIN karty " +
                 "ON konta.ID = karty.KontoID " +
@@ -57,5 +63,13 @@ public class DatabaseConnection {
     private void updateBlikStatus(int accountId, int blikNumber) {
         String updateQuery = "UPDATE blik SET Aktywny = ? WHERE KontoID = ? AND NumerBlik = ?";
         jdbcTemplate.update(updateQuery, false, accountId, blikNumber);
+    }
+
+    public void updateMoneyBlik(Blik blik) {
+        String query = "UPDATE konta JOIN blik " +
+                "ON konta.ID = blik.KontoID " +
+                "SET konta.Saldo = konta.Saldo - ? " +
+                "WHERE blik.NumerBlik = ? AND blik.Aktywny = ?";
+        jdbcTemplate.update(query, blik.getAmount(), blik.getBlikCode(), true);
     }
 }
