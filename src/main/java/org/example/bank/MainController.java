@@ -50,7 +50,7 @@ public class MainController {
     }
 
     @PostMapping("api/payments/blik")
-    public  ResponseEntity<Boolean> payment(@RequestBody Blik blik){
+    public ResponseEntity<Boolean> payment(@RequestBody Blik blik){
         if(db.searchBlik(blik)){
             db.updateMoneyBlik(blik);
             System.out.println("[Bank] Dokonano płatności.");
@@ -60,5 +60,10 @@ public class MainController {
         }
 
         return ResponseEntity.badRequest().body(false);
+    }
+
+    @PostMapping("api/login")
+    public ResponseEntity<Boolean> login(@RequestBody Login login){
+
     }
 }

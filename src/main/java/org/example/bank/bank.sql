@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2025 at 09:16 AM
+-- Generation Time: Apr 23, 2025 at 02:45 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -33,6 +33,13 @@ CREATE TABLE `blik` (
   `NumerBlik` int(11) NOT NULL,
   `Aktywny` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `blik`
+--
+
+INSERT INTO `blik` (`ID`, `KontoID`, `NumerBlik`, `Aktywny`) VALUES
+(1, 1, 66997, 1);
 
 -- --------------------------------------------------------
 
@@ -93,17 +100,19 @@ CREATE TABLE `konta` (
   `KlientID` int(11) DEFAULT NULL,
   `NumerKonta` varchar(20) DEFAULT NULL,
   `TypKonta` enum('Oszczędnościowe','Rachunek bieżący','Inwestycyjne') DEFAULT NULL,
-  `Saldo` decimal(15,2) DEFAULT NULL
+  `Saldo` decimal(15,2) DEFAULT NULL,
+  `login` varchar(15) NOT NULL,
+  `haslo` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `konta`
 --
 
-INSERT INTO `konta` (`ID`, `KlientID`, `NumerKonta`, `TypKonta`, `Saldo`) VALUES
-(1, 1, '12345678901234567890', 'Rachunek bieżący', 5000.00),
-(2, 1, '09876543210987654321', 'Oszczędnościowe', 15000.00),
-(3, 2, '11223344556677889900', 'Rachunek bieżący', 7000.00);
+INSERT INTO `konta` (`ID`, `KlientID`, `NumerKonta`, `TypKonta`, `Saldo`, `login`, `haslo`) VALUES
+(1, 1, '12345678901234567890', 'Rachunek bieżący', 5000.00, 'japaklapku17', 'awe2'),
+(2, 1, '09876543210987654321', 'Oszczędnościowe', 15000.00, 'siemsiema1121', 'sdfsf4'),
+(3, 2, '11223344556677889900', 'Rachunek bieżący', 7000.00, 'dicho', 'gfdh43563');
 
 -- --------------------------------------------------------
 
@@ -176,7 +185,7 @@ ALTER TABLE `transakcje`
 -- AUTO_INCREMENT for table `blik`
 --
 ALTER TABLE `blik`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `karty`

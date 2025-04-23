@@ -72,4 +72,9 @@ public class DatabaseConnection {
                 "WHERE blik.NumerBlik = ? AND blik.Aktywny = ?";
         jdbcTemplate.update(query, blik.getAmount(), blik.getBlikCode(), true);
     }
+
+    public boolean checkLoginCredentials(Login login){
+        String query = "";
+        // TODO
+    }
 }
