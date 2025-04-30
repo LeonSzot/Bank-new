@@ -66,8 +66,7 @@ public class MainController {
     public ResponseEntity<Boolean> login(@RequestBody Login login){
         return db.checkLoginCredentials(login) ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
     }
-    @GetMapping("api/login")
-    public Konto login(@RequestBody int id){
-        return new Konto();
-    }
+
+        //TODO make accountData, Card and transaction endpoints to send data to mobile app,
+
 }
