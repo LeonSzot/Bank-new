@@ -67,6 +67,6 @@ public class MainController {
         return db.checkLoginCredentials(login) ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
     }
 
-        //TODO make accountData, Card and transaction endpoints to send data to mobile app,
+        //TODO make accountData, Card and transaction endpoints to send data to mobile app (they should return JSONS to app)
 
 }
