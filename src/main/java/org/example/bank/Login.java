@@ -2,7 +2,7 @@ package org.example.bank;
 
 public class Login {
     private String login;
-    private String password;
+    private String haslo;
 
     public String getLogin() {
         return login;
@@ -12,11 +12,11 @@ public class Login {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHaslo() {
+        return haslo;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHaslo(String haslo) {
+        this.haslo = haslo;
     }
 }

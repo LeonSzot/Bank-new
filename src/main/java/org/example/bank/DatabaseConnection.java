@@ -74,7 +74,8 @@ public class DatabaseConnection {
     }
 
     public boolean checkLoginCredentials(Login login){
-        String query = "";
-        // TODO
+        String query = "SELECT COUNT(*) FROM `konta` WHERE `login` = ? AND `haslo` = ?";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, login.getLogin(), login.getHaslo(), true);
+        return count == 1;
     }
 }

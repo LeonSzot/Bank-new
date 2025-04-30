@@ -64,6 +64,10 @@ public class MainController {
 
     @PostMapping("api/login")
     public ResponseEntity<Boolean> login(@RequestBody Login login){
-
+        return db.checkLoginCredentials(login) ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
+    }
+    @GetMapping("api/login")
+    public Konto login(@RequestBody int id){
+        return new Konto();
     }
 }
