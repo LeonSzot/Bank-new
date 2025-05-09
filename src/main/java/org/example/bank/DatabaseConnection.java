@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -78,4 +79,20 @@ public class DatabaseConnection {
         int count = jdbcTemplate.queryForObject(query, Integer.class, login.getLogin(), login.getHaslo(), true);
         return count == 1;
     }
+
+    public AccountData getAccount(String login) {
+        String query = "SELECT `NumerKonta`, `TypKonta`, `Saldo` FROM `konta` WHERE `login` = ?";
+        List<AccountData> results = jdbcTemplate.query(query, new Object[]{login}, (rs, rowNum) -> {
+            AccountData account = new AccountData();
+            account.setAccountNumber(rs.getInt("NumerKonta"));  // Użyj odpowiednich nazw kolumn
+            account.setAccountType(rs.getString("TypKonta"));
+            account.setBalance(rs.getDouble("Saldo"));
+            return account;
+        });
+
+        return results.isEmpty() ? null : results.get(0);
+    }
+
+
+
 }
