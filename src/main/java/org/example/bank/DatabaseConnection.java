@@ -1,5 +1,7 @@
 package org.example.bank;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -84,7 +86,7 @@ public class DatabaseConnection {
         String query = "SELECT `NumerKonta`, `TypKonta`, `Saldo` FROM `konta` WHERE `login` = ?";
         List<AccountData> results = jdbcTemplate.query(query, new Object[]{login}, (rs, rowNum) -> {
             AccountData account = new AccountData();
-            account.setAccountNumber(rs.getInt("NumerKonta"));  // Użyj odpowiednich nazw kolumn
+            account.setAccountNumber(rs.getString("NumerKonta"));  // Użyj odpowiednich nazw kolumn
             account.setAccountType(rs.getString("TypKonta"));
             account.setBalance(rs.getDouble("Saldo"));
             return account;

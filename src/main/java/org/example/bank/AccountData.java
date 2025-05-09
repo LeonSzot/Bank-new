@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class AccountData {
     private double balance;
-    private int accountNumber;
+    private String accountNumber;
     private String accountType;
 
     public void setBalance(double balance) {
         this.balance = balance;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -23,7 +23,7 @@ public class AccountData {
         return balance;
     }
 
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
