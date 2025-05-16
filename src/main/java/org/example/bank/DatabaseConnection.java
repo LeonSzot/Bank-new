@@ -3,6 +3,7 @@ package org.example.bank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.stereotype.Repository;
@@ -84,16 +85,11 @@ public class DatabaseConnection {
 
     public AccountData getAccount(String login) {
         String query = "SELECT `NumerKonta`, `TypKonta`, `Saldo` FROM `konta` WHERE `login` = ?";
-        List<AccountData> results = jdbcTemplate.query(query, new Object[]{login}, (rs, rowNum) -> {
-            AccountData account = new AccountData();
-            account.setAccountNumber(rs.getString("NumerKonta"));  // Użyj odpowiednich nazw kolumn
-            account.setAccountType(rs.getString("TypKonta"));
-            account.setBalance(rs.getDouble("Saldo"));
-            return account;
-        });
+        List<AccountData> accounts = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(AccountData.class), login);
 
-        return results.isEmpty() ? null : results.get(0);
+        return accounts.isEmpty() ? null : accounts.get(0);
     }
+
 
 
 

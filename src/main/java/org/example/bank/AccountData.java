@@ -1,33 +1,31 @@
 package org.example.bank;
 
-import java.util.Date;
-
 public class AccountData {
-    private double balance;
-    private String accountNumber;
-    private String accountType;
+    private double Saldo;
+    private String NumerKonta;
+    private String TypKonta;
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setSaldo(double Saldo) {
+        this.Saldo = Saldo;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setNumerKonta(String numerKonta) {
+        this.NumerKonta = numerKonta;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setTypKonta(String TypKonta) {
+        this.TypKonta = TypKonta;
     }
 
-    public double getBalance() {
-        return balance;
+    public double getSaldo() {
+        return Saldo;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getNumerKonta() {
+        return NumerKonta;
     }
 
-    public String getAccountType() {
-        return accountType;
+    public String getTypKonta() {
+        return TypKonta;
     }
 }

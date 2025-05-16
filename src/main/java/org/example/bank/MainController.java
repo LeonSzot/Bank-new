@@ -1,9 +1,11 @@
 package org.example.bank;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -68,9 +70,19 @@ public class MainController {
     }
 
     @PostMapping("api/getAccount")
-    public AccountData getAccount(@RequestBody String login){
-        return db.getAccount(login);
+    public ResponseEntity<AccountData> getAccount(@RequestBody Map<String, String> request) {
+        String login = request.get("login");
+        AccountData account = db.getAccount(login);
+
+        if (account != null) {
+            return ResponseEntity.ok(account);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
+
+
+
 
 
 
